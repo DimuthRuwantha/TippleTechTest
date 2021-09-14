@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace api.Models.Response
+namespace Common.Models.Response
 {
     public class Cocktail
     {

@@ -5,7 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Models\DTO" />
+      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\Interface\Interface.csproj" />
+      <ProjectReference Include="..\services\Services.csproj" />
     </ItemGroup>
 
 

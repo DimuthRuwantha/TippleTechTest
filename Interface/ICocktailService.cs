@@ -1,10 +1,12 @@
 ﻿using System;
+using Common.Models.Response;
 
 namespace Interface
 {
-    interface ICockTailService
+    public interface ICockTailService
     {
-        void SearchCockTail(string ingredient);
-        
+       CocktailList SearchCockTail(string ingredient);
+
+       Cocktail GetRandomCockTail();
     }
 }
