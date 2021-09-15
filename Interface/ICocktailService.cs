@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Common.Models.Response;
 
 namespace Interface
 {
     public interface ICockTailService
     {
-       CocktailList SearchCockTail(string ingredient);
+        Task<CocktailList> SearchCockTail(string ingredient);
 
-       Cocktail GetRandomCockTail();
+       Task<Cocktail> GetRandomCockTail();
     }
 }

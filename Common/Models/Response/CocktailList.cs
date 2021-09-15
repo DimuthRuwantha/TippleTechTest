@@ -1,9 +1,14 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Common.Models.Response
 {
+    [DataContract]
     public class CocktailList
     {
+        [DataMember]
+        [JsonPropertyName("drinks")]
         public List<Cocktail> Cocktails { get; set; }
         public ListMeta meta { get; set; }
     }
