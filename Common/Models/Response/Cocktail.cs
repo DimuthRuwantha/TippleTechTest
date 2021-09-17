@@ -28,5 +28,12 @@ namespace Common.Models.Response
         public string strDrinkThumb { get; set; }
         
         public string idDrink { get; set; }
+
+        public string strInstructions { get; set; }
+
+        public string strIngredient1 { get; set; }
+        public string strMeashure1 { get; set; }
+        public string strImageSource { get; set; }
+        
     }
 }

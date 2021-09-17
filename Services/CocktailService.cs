@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Common.Models.Response;
 using Interface;
 using System.Net.Http;
@@ -34,6 +36,7 @@ namespace Services
         {
             var cockTailList = new CocktailList()
             {
+                Cocktails = new List<Cocktail>(),
                 meta = new ListMeta()
                 {
                     firstId = int.MaxValue,
@@ -42,16 +45,60 @@ namespace Services
                 }
             };
            
-            foreach (var drink in cocktails.Drinks)
+            /*foreach (var drink in cocktails.Drinks)
             {
                 //https://stackoverflow.com/questions/15136542/parallel-foreach-with-asynchronous-lambda
                 var drinkId = int.Parse(drink.idDrink);
                 if(drinkId < cockTailList.meta.firstId) cockTailList.meta.firstId = drinkId;
                 if(drinkId > cockTailList.meta.lastId) cockTailList.meta.lastId = drinkId;
                 var details = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/lookup.php?i={drink.idDrink}");
+            }*/
+
+            var fillUpDataTasks = cocktails.Drinks.Select(async drink =>
+            {
+                var drinkId = int.Parse(drink.idDrink);
+                if (drinkId < cockTailList.meta.firstId) cockTailList.meta.firstId = drinkId;
+                if (drinkId > cockTailList.meta.lastId) cockTailList.meta.lastId = drinkId;
+                var details = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/lookup.php?i={drink.idDrink}");
+
+                if (details?.Drinks.First() != null)
+                {
+                    var drink1 = details?.Drinks?.First();
+                    Console.WriteLine(drink1.idDrink);
+                    var cockTail = MapToCocktailObject(drink1);
+                    if(cockTail != null)cockTailList.Cocktails.Add(cockTail);
+                }
+            });
+
+            await Task.WhenAll(fillUpDataTasks);
+            return cockTailList;
+        }
+
+        private Cocktail MapToCocktailObject(Drink drink)
+        {
+            try
+            {
+                var cockTail = new Cocktail()
+                {
+                    Id = int.Parse(drink.idDrink),
+                    Name = drink.strDrink,
+                    ImageURL = drink.strImageSource,
+                    Ingredients = new List<string>()
+                    {
+                        drink.strIngredient1,
+                        //..
+                    },
+                    Instructions = drink.strInstructions
+                };
+                
+                return cockTail;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
-            return cockTailList;
+            return null;
         }
     }
 }
