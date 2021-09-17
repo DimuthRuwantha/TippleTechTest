@@ -30,27 +30,46 @@ namespace api.Controllers
         [Route("search-ingredient/{ingredient}")]
         public async Task<IActionResult> GetIngredientSearch([FromRoute] string ingredient)
         {
-            var cocktailList = new CocktailList();
-            // TODO - Search the CocktailDB for cocktails with the ingredient given, and return the cocktails
-            // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
+            try
+            {
+                // TODO - Search the CocktailDB for cocktails with the ingredient given, and return the cocktails
+                // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
             
-            var cocktailList1 =  await _cockTailService.SearchCockTail(ingredient);
-            // You will need to populate the cocktail details from
-            // https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
-            // The calculate and fill in the meta object
+                var cocktailList1 =  await _cockTailService.SearchCockTail(ingredient);
+                // You will need to populate the cocktail details from
+                // https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
+                // The calculate and fill in the meta object
             
-            return Ok(cocktailList1);
+                return Ok(cocktailList1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+           
         }
 
         [HttpGet]
         [Route("random")]
         public async Task<IActionResult> GetRandom()
         {
-            // TODO - Go and get a random cocktail
-            // https://www.thecocktaildb.com/api/json/v1/1/random.php
-            var cocktail = await _cockTailService.GetRandomCockTail();
+            try
+            {
+                // TODO - Go and get a random cocktail
+                // https://www.thecocktaildb.com/api/json/v1/1/random.php
+                var cocktail = await _cockTailService.GetRandomCockTail();
+
+                if (cocktail == null) NoContent();
+                return Ok(cocktail);
+            }
+            catch (Exception e)
+            {
+                // handle errors if time permits
+                Console.WriteLine(e);
+                return StatusCode(500);
+            }
             
-            return Ok(cocktail);
         }
     }
 }
