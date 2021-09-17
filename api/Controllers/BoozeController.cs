@@ -39,13 +39,15 @@ namespace api.Controllers
                 // You will need to populate the cocktail details from
                 // https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
                 // The calculate and fill in the meta object
+
+                if (cocktailList1 == null || !cocktailList1.Cocktails.Any()) return NoContent();
             
                 return Ok(cocktailList1);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return StatusCode(500);
             }
            
         }
