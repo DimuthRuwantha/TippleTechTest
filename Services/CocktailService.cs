@@ -28,8 +28,10 @@ namespace Services
 
         public async Task<Cocktail> GetRandomCockTail()
         {
-            var c = await _http.GetFromJsonAsync<CockTails>($"/api/json/v1/1/random.php");
-            return new Cocktail();
+            var cockTails = await _http.GetFromJsonAsync<CockTails>($"/api/json/v1/1/random.php");
+            if (cockTails == null) return null;
+            var cockTail = MapToCocktailObject(cockTails.Drinks.First());
+            return cockTail;
         }
 
         private async Task<CocktailList> FillMetaData(CockTails cocktails)
@@ -78,37 +80,28 @@ namespace Services
                     Name = drink.strDrink,
                     ImageURL = drink.strImageSource,
                     Ingredients = new List<string>(),
-                    Instructions = drink.strInstructions
+                    Instructions = drink.strInstructions,
                 };
 
-                var initial = 1;
-                switch (initial)
+                var count = 1;
+                do
                 {
-                    case 1:
-                    {
-                        cockTail.Ingredients.Add(drink.strIngredient1);
-                        if (drink.strIngredient2 == null) break;
-                        goto case 2;
-                    }
-                    case 2:
-                    {
-                        cockTail.Ingredients.Add(drink.strIngredient2);
-                        if (drink.strIngredient2 == null) break;
-                        goto case 3;
-                    }
-                    case 3:
-                    {
-                        break;
-                    }
-            }
-                
+                    var prop = drink.GetType().GetProperty($"strIngredient{count}");
+                    var value = (string)prop?.GetValue(drink, null);
+                    if (value == null) break;
+                    
+                    cockTail.Ingredients.Add(value);
+                    count++;
+                } while (true);
+
                 return cockTail;
             }
             catch (Exception e)
             {
+                // Log Error
+                // decide to throw or silently fail and continue
                 Console.WriteLine(e);
             }
-
             return null;
         }
     }
