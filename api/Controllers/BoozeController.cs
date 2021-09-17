@@ -46,10 +46,9 @@ namespace api.Controllers
         [Route("random")]
         public async Task<IActionResult> GetRandom()
         {
-            var cocktail = new Cocktail();
             // TODO - Go and get a random cocktail
             // https://www.thecocktaildb.com/api/json/v1/1/random.php
-            cocktail = await _cockTailService.GetRandomCockTail();
+            var cocktail = await _cockTailService.GetRandomCockTail();
             
             return Ok(cocktail);
         }

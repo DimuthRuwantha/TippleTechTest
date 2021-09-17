@@ -15,6 +15,7 @@ namespace Common.Models.Response
         public string ImageURL { get; set; }
     }
 
+    #region Temp objects
     public class CockTails
     {
         [DataMember]
@@ -32,8 +33,38 @@ namespace Common.Models.Response
         public string strInstructions { get; set; }
 
         public string strIngredient1 { get; set; }
+        public string strIngredient2 { get; set; }
+        public string strIngredient3 { get; set; }
+        public string strIngredient4 { get; set; }
+        public string strIngredient5 { get; set; }
+        public string strIngredient6 { get; set; }
+        public string strIngredient7 { get; set; }
+        public string strIngredient8 { get; set; }
+        public string strIngredient9 { get; set; }
+        public string strIngredient10 { get; set; }
+        public string strIngredient11 { get; set; }
+        public string strIngredient12 { get; set; }
+        public string strIngredient13 { get; set; }
+        public string strIngredient14 { get; set; }
+        public string strIngredient15 { get; set; }
+        
         public string strMeashure1 { get; set; }
+        public string strMeashure2 { get; set; }
+        public string strMeashure3 { get; set; }
+        public string strMeashure4 { get; set; }
+        public string strMeashure5 { get; set; }
+        public string strMeashure6 { get; set; }
+        public string strMeashure7 { get; set; }
+        public string strMeashure8 { get; set; }
+        public string strMeashure9 { get; set; }
+        public string strMeashure10 { get; set; }
+        public string strMeashure11 { get; set; }
+        public string strMeashure12 { get; set; }
+        public string strMeashure13 { get; set; }
+        public string strMeashure14 { get; set; }
+        public string strMeashure15 { get; set; }
         public string strImageSource { get; set; }
         
     }
+    #endregion
 }

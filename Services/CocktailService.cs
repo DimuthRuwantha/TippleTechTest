@@ -44,15 +44,6 @@ namespace Services
                     count = cocktails.Drinks.Count,
                 }
             };
-           
-            /*foreach (var drink in cocktails.Drinks)
-            {
-                //https://stackoverflow.com/questions/15136542/parallel-foreach-with-asynchronous-lambda
-                var drinkId = int.Parse(drink.idDrink);
-                if(drinkId < cockTailList.meta.firstId) cockTailList.meta.firstId = drinkId;
-                if(drinkId > cockTailList.meta.lastId) cockTailList.meta.lastId = drinkId;
-                var details = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/lookup.php?i={drink.idDrink}");
-            }*/
 
             var fillUpDataTasks = cocktails.Drinks.Select(async drink =>
             {
@@ -63,7 +54,7 @@ namespace Services
 
                 if (details?.Drinks.First() != null)
                 {
-                    var drink1 = details?.Drinks?.First();
+                    var drink1 = details.Drinks?.First();
                     Console.WriteLine(drink1.idDrink);
                     var cockTail = MapToCocktailObject(drink1);
                     if(cockTail != null)cockTailList.Cocktails.Add(cockTail);
@@ -71,6 +62,9 @@ namespace Services
             });
 
             await Task.WhenAll(fillUpDataTasks);
+            
+            // TODO calculate median
+            
             return cockTailList;
         }
 
@@ -83,13 +77,30 @@ namespace Services
                     Id = int.Parse(drink.idDrink),
                     Name = drink.strDrink,
                     ImageURL = drink.strImageSource,
-                    Ingredients = new List<string>()
-                    {
-                        drink.strIngredient1,
-                        //..
-                    },
+                    Ingredients = new List<string>(),
                     Instructions = drink.strInstructions
                 };
+
+                var initial = 1;
+                switch (initial)
+                {
+                    case 1:
+                    {
+                        cockTail.Ingredients.Add(drink.strIngredient1);
+                        if (drink.strIngredient2 == null) break;
+                        goto case 2;
+                    }
+                    case 2:
+                    {
+                        cockTail.Ingredients.Add(drink.strIngredient2);
+                        if (drink.strIngredient2 == null) break;
+                        goto case 3;
+                    }
+                    case 3:
+                    {
+                        break;
+                    }
+            }
                 
                 return cockTail;
             }
