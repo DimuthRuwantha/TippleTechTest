@@ -25,9 +25,7 @@ namespace Common.Models.Response
     public class Drink
     {
         public string strDrink { get; set; }
-        
-        public string strDrinkThumb { get; set; }
-        
+
         public string idDrink { get; set; }
 
         public string strInstructions { get; set; }
@@ -48,21 +46,6 @@ namespace Common.Models.Response
         public string strIngredient14 { get; set; }
         public string strIngredient15 { get; set; }
         
-        public string strMeashure1 { get; set; }
-        public string strMeashure2 { get; set; }
-        public string strMeashure3 { get; set; }
-        public string strMeashure4 { get; set; }
-        public string strMeashure5 { get; set; }
-        public string strMeashure6 { get; set; }
-        public string strMeashure7 { get; set; }
-        public string strMeashure8 { get; set; }
-        public string strMeashure9 { get; set; }
-        public string strMeashure10 { get; set; }
-        public string strMeashure11 { get; set; }
-        public string strMeashure12 { get; set; }
-        public string strMeashure13 { get; set; }
-        public string strMeashure14 { get; set; }
-        public string strMeashure15 { get; set; }
         public string strImageSource { get; set; }
         
     }
