@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Common.Models.Response;
 using Interface;
@@ -34,15 +35,15 @@ namespace api.Controllers
             {
                 // TODO - Search the CocktailDB for cocktails with the ingredient given, and return the cocktails
                 // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
-            
-                var cocktailList1 =  await _cockTailService.SearchCockTail(ingredient);
                 // You will need to populate the cocktail details from
                 // https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007
                 // The calculate and fill in the meta object
-
-                if (cocktailList1 == null || !cocktailList1.Cocktails.Any()) return NoContent();
+                
+                var cocktailList =  await _cockTailService.SearchCockTail(ingredient);
+                
+                if (cocktailList == null || !cocktailList.Cocktails.Any()) return NoContent();
             
-                return Ok(cocktailList1);
+                return Ok(cocktailList);
             }
             catch (Exception e)
             {
@@ -63,6 +64,11 @@ namespace api.Controllers
 
                 if (cocktail == null) NoContent();
                 return Ok(cocktail);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+                return StatusCode(e.HResult);
             }
             catch (Exception e)
             {

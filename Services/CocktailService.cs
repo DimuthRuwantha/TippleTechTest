@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Services.utils;
 
 namespace Services
 {
@@ -36,7 +37,7 @@ namespace Services
             }
             catch (JsonException e)
             {
-                //nothing to cast, 
+                //nothing to cast, JToken is empty
                 Console.WriteLine(e);
             }
             catch (Exception e)
@@ -59,6 +60,7 @@ namespace Services
 
         private async Task<CocktailList> FillMetaData(CockTails cocktails)
         {
+            var list = new List<int>();
             var cockTailList = new CocktailList()
             {
                 Cocktails = new List<Cocktail>(),
@@ -80,14 +82,18 @@ namespace Services
                 if (details?.Drinks.First() != null)
                 {
                     var drink1 = details.Drinks?.First();
-                    Console.WriteLine(drink1.idDrink);
                     var cockTail = MapToCocktailObject(drink1);
-                    if(cockTail != null)cockTailList.Cocktails.Add(cockTail);
+                    if (cockTail != null)
+                    {
+                        cockTailList.Cocktails.Add(cockTail);
+                        list.Add(cockTail.Ingredients.Count);
+                    }
                 }
             });
 
             await Task.WhenAll(fillUpDataTasks);
-            
+
+            cockTailList.meta.medianIngredientCount = Median.GetMedian(list);
             // TODO calculate median
             
             return cockTailList;

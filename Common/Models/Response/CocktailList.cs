@@ -18,6 +18,6 @@ namespace Common.Models.Response
         public int count { get; set; }    // number of results
         public int firstId { get; set; }    // smallest Id of the results
         public int lastId { get; set; }    // largest Id of the results
-        public int medianIngredientCount { get; set; }    // median of the number of ingredients per cocktail
+        public double medianIngredientCount { get; set; }    // median of the number of ingredients per cocktail
     }
 }
