@@ -5,6 +5,7 @@ using Common.Models.Response;
 using Interface;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Services
@@ -12,18 +13,40 @@ namespace Services
     public class CocktailService : ICockTailService
     {
         private readonly HttpClient _http;
+        private const string BaseAddress = "https://www.thecocktaildb.com/";
         public CocktailService(HttpClient http)
         {
             _http = http;
+            _http.BaseAddress = new Uri(BaseAddress);
         }
+        
         public async Task<CocktailList> SearchCockTail(string ingredient)
         {
-            var cocktailsRaw = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/filter.php?i=Gin");
+            try
+            {
+                var cocktailsRaw = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/filter.php?i={ingredient}");
+
+                if (cocktailsRaw == null)
+                {
+                    return null;
+                }
+                var cocktails = await FillMetaData(cocktailsRaw);
             
-            if (cocktailsRaw == null) return null;
-            var cocktails = await FillMetaData(cocktailsRaw);
-            
-            return cocktails;
+                return cocktails;
+            }
+            catch (JsonException e)
+            {
+                //nothing to cast, 
+                Console.WriteLine(e);
+            }
+            catch (Exception e)
+            {
+                // other exceptions
+                Console.WriteLine(e.Message);
+                throw;
+            }
+
+            return null;
         }
 
         public async Task<Cocktail> GetRandomCockTail()

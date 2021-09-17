@@ -29,10 +29,8 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://www.thecocktaildb.com/");
             services.AddControllers();
-            services.AddScoped(sp => httpClient);
+            services.AddTransient<HttpClient>();
             services.AddScoped<ICockTailService, CocktailService>();
         }
 

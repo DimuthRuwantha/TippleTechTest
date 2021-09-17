@@ -49,7 +49,6 @@ namespace api.Controllers
                 Console.WriteLine(e);
                 return StatusCode(500);
             }
-           
         }
 
         [HttpGet]

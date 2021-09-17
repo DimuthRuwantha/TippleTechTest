@@ -18,7 +18,6 @@ namespace Common.Models.Response
     #region Temp objects
     public class CockTails
     {
-        [DataMember]
         public List<Drink> Drinks { get; set; }
     }
 
