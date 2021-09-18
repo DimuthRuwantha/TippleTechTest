@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Common.Models.Response;
-using Interface;
+using Microsoft.Extensions.Configuration;
 
 namespace Services.Context
 {
@@ -13,10 +13,10 @@ namespace Services.Context
         private readonly HttpClient _http;
         private const string BaseAddress = "https://www.thecocktaildb.com/";
         
-        public CockTailDataService(HttpClient http)
+        public CockTailDataService(HttpClient http, IConfiguration configuration)
         {
             _http = http;
-            _http.BaseAddress = new Uri(BaseAddress);
+            _http.BaseAddress = new Uri(configuration["BaseUrl"]);
         }
         public async Task<CockTails> GetCocktailsByIngredient(string ingredient)
         {
