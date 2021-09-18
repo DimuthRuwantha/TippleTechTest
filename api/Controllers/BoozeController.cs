@@ -41,7 +41,8 @@ namespace api.Controllers
                 
                 var cocktailList =  await _cockTailService.SearchCockTail(ingredient);
                 
-                if (cocktailList == null || !cocktailList.Cocktails.Any()) return NoContent();
+                if (cocktailList?.Cocktails == null || !cocktailList.Cocktails.Any())
+                    return NoContent();
             
                 return Ok(cocktailList);
             }
@@ -62,7 +63,8 @@ namespace api.Controllers
                 // https://www.thecocktaildb.com/api/json/v1/1/random.php
                 var cocktail = await _cockTailService.GetRandomCockTail();
 
-                if (cocktail == null) NoContent();
+                if (cocktail == null) return NoContent();
+                
                 return Ok(cocktail);
             }
             catch (HttpRequestException e)

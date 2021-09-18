@@ -1,0 +1,17 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\Dimuth\AppData\Local\JetBrains\Rider2021.2\resharper-host\temp\Rider\vAny\CoverageData\_TechTest.-1872279936\Snapshot\snapshot.utdcvr</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=75bfe0ef_002D38e5_002D40cf_002Db1cb_002D297adc5fc62b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetMedianForEvenNumbers" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.MedianTest.GetMedianForEvenNumbers&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.MedianTest.GetMedianForOddNumberOfItems&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.RandomCocktailTests.GetRandomCocktailSuccess&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.SearchByIngredientTests.GetCockTailByIngredient&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.RandomCocktailTests.GetRandomCocktailEmpty&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.SearchByIngredientTests.GetCockTailByIngredientReturnEmptyList&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.SearchByIngredientTests.GetCockTailByIngredientReturnNull&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.SearchByIngredientTests.GetCockTailByIngredientTrowingErrorReturnInternalServerError&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.RandomCocktailTests.GetCockTailByIngredientTrowingErrorReturnInternalServerError&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.RandomCocktailTests.GetRandomThrowingHttpErrorReturnStatusCode&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0BD9C043-E9B8-463A-9C32-6F3EB17D40FF::.NETCoreApp,Version=v3.1::Test.api.RandomCocktailTests.GetRandomThrowingErrorReturnInternalServerError&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
