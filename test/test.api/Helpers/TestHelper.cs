@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Common.Models.DTO;
 using Common.Models.Response;
 
 namespace Test.api.Helpers

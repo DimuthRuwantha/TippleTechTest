@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using api.Controllers;
+using Common.Models.DTO;
 using Common.Models.Response;
 using Interface;
 using Microsoft.AspNetCore.Mvc;
