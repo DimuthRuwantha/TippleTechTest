@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Services.Context;
 using Services.utils;
 
 namespace Services
@@ -15,9 +16,11 @@ namespace Services
     {
         private readonly HttpClient _http;
         private const string BaseAddress = "https://www.thecocktaildb.com/";
-        public CocktailService(HttpClient http)
+        private readonly ICocktailDataService _cockTailDataService;
+        public CocktailService(HttpClient http, ICocktailDataService cockTailDataDataService)
         {
             _http = http;
+            _cockTailDataService = cockTailDataDataService;
             _http.BaseAddress = new Uri(BaseAddress);
         }
         
@@ -25,13 +28,13 @@ namespace Services
         {
             try
             {
-                var cocktailsRaw = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/filter.php?i={ingredient}");
-
+                var cocktailsRaw = await _cockTailDataService.GetCocktailsByIngredient(ingredient);
+                
                 if (cocktailsRaw == null)
                 {
                     return null;
                 }
-                var cocktails = await FillMetaData(cocktailsRaw);
+                var cocktails = await PopulateCocktailInfoById(cocktailsRaw);
             
                 return cocktails;
             }
@@ -46,19 +49,19 @@ namespace Services
                 Console.WriteLine(e.Message);
                 throw;
             }
-
             return null;
         }
 
         public async Task<Cocktail> GetRandomCockTail()
         {
-            var cockTails = await _http.GetFromJsonAsync<CockTails>($"/api/json/v1/1/random.php");
-            if (cockTails == null) return null;
-            var cockTail = MapToCocktailObject(cockTails.Drinks.First());
+            var drink = await _cockTailDataService.GetRandomCockTail();
+            //await _http.GetFromJsonAsync<CockTails>($"/api/json/v1/1/random.php");
+            if (drink == null) return null;
+            var cockTail = MapToCocktailObject(drink);
             return cockTail;
         }
 
-        private async Task<CocktailList> FillMetaData(CockTails cocktails)
+        private async Task<CocktailList> PopulateCocktailInfoById(CockTails cocktails)
         {
             var list = new List<int>();
             var cockTailList = new CocktailList()
@@ -77,12 +80,11 @@ namespace Services
                 var drinkId = int.Parse(drink.idDrink);
                 if (drinkId < cockTailList.meta.firstId) cockTailList.meta.firstId = drinkId;
                 if (drinkId > cockTailList.meta.lastId) cockTailList.meta.lastId = drinkId;
-                var details = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/lookup.php?i={drink.idDrink}");
-
-                if (details?.Drinks.First() != null)
+                var drinkDetails = await _cockTailDataService.GetCocktailDrinkById(drinkId);
+                
+                if (drinkDetails != null)
                 {
-                    var drink1 = details.Drinks?.First();
-                    var cockTail = MapToCocktailObject(drink1);
+                    var cockTail = MapToCocktailObject(drinkDetails);
                     if (cockTail != null)
                     {
                         cockTailList.Cocktails.Add(cockTail);
@@ -94,7 +96,6 @@ namespace Services
             await Task.WhenAll(fillUpDataTasks);
 
             cockTailList.meta.medianIngredientCount = Median.GetMedian(list);
-            // TODO calculate median
             
             return cockTailList;
         }
