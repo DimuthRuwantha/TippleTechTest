@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
-using Xunit;
 using Services.utils;
+using Xunit;
 
-namespace Test.api
+namespace Test.api.UtilityTests
 {
     public class MedianTest
     {

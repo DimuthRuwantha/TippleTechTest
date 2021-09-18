@@ -8,18 +8,15 @@ using Moq;
 using Services.Context;
 using Test.api.Helpers;
 using Xunit;
-using Xunit.Sdk;
 
-namespace Test.api
+namespace Test.api.EndPointTests
 {
     public class SearchByIngredientTests
     {
-        private readonly Mock<ICocktailDataService> _cocktailDataServiceMock;
         private readonly Mock<ICockTailService> _cockTailService;
 
         public SearchByIngredientTests()
         {
-            _cocktailDataServiceMock = new Mock<ICocktailDataService>();
             _cockTailService = new Mock<ICockTailService>();
         }
 

@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Common.Models.Response;
 using Microsoft.Extensions.Configuration;
@@ -18,23 +20,64 @@ namespace Services.Context
             _http = http;
             _http.BaseAddress = new Uri(configuration["BaseUrl"]);
         }
-        public async Task<CockTails> GetCocktailsByIngredient(string ingredient)
+        public async Task<DrinksList> GetCocktailsByIngredient(string ingredient)
         {
-            var cocktailsRaw = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/filter.php?i={ingredient}");
-            return cocktailsRaw;
+            try
+            {
+                var cocktailsRaw = await _http.GetFromJsonAsync<DrinksList>($"api/json/v1/1/filter.php?i={ingredient}");
+                return cocktailsRaw;
+            }
+            catch (JsonException e)
+            {
+                //nothing to cast, JToken is empty
+                Console.WriteLine(e);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            return null;
         }
 
         public async Task<Drink> GetCocktailDrinkById(int drinkId)
         {
-            var details = await _http.GetFromJsonAsync<CockTails>($"api/json/v1/1/lookup.php?i={drinkId}");
-
-            return details?.Drinks.First();
+            try
+            {
+                var details = await _http.GetFromJsonAsync<DrinksList>($"api/json/v1/1/lookup.php?i={drinkId}");
+                return details?.Drinks.First();
+            }
+            catch (JsonException e)
+            {
+                //nothing to cast, JToken is empty
+                Console.WriteLine(e);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            return null;
         }
 
         public async Task<Drink> GetRandomCockTail()
         {
-            var cockTailDrink =  await _http.GetFromJsonAsync<CockTails>($"/api/json/v1/1/random.php");
-            return cockTailDrink?.Drinks.First();
+            try
+            {
+                var cockTailDrink =  await _http.GetFromJsonAsync<DrinksList>($"/api/json/v1/1/random.php");
+                return cockTailDrink?.Drinks.First();
+            }
+            catch (JsonException e)
+            {
+                //nothing to cast, JToken is empty
+                Console.WriteLine(e);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            return null;
         }
     }
 }

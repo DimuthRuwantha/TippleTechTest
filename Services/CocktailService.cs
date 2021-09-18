@@ -14,14 +14,11 @@ namespace Services
 {
     public class CocktailService : ICockTailService
     {
-        private readonly HttpClient _http;
         private const string BaseAddress = "https://www.thecocktaildb.com/";
         private readonly ICocktailDataService _cockTailDataService;
-        public CocktailService(HttpClient http, ICocktailDataService cockTailDataDataService)
+        public CocktailService(ICocktailDataService cockTailDataDataService)
         {
-            _http = http;
             _cockTailDataService = cockTailDataDataService;
-            _http.BaseAddress = new Uri(BaseAddress);
         }
         
         public async Task<CocktailList> SearchCockTail(string ingredient)
@@ -30,18 +27,9 @@ namespace Services
             {
                 var cocktailsRaw = await _cockTailDataService.GetCocktailsByIngredient(ingredient);
                 
-                if (cocktailsRaw == null)
-                {
-                    return null;
-                }
+                if (cocktailsRaw == null) return null;
                 var cocktails = await PopulateCocktailInfoById(cocktailsRaw);
-            
                 return cocktails;
-            }
-            catch (JsonException e)
-            {
-                //nothing to cast, JToken is empty
-                Console.WriteLine(e);
             }
             catch (Exception e)
             {
@@ -49,7 +37,6 @@ namespace Services
                 Console.WriteLine(e.Message);
                 throw;
             }
-            return null;
         }
 
         public async Task<Cocktail> GetRandomCockTail()
@@ -61,8 +48,11 @@ namespace Services
             return cockTail;
         }
 
-        private async Task<CocktailList> PopulateCocktailInfoById(CockTails cocktails)
+        private async Task<CocktailList> PopulateCocktailInfoById(DrinksList cocktails)
         {
+            // no use of returning empty objects
+            if (cocktails?.Drinks == null || !cocktails.Drinks.Any()) return null; 
+            
             var list = new List<int>();
             var cockTailList = new CocktailList()
             {

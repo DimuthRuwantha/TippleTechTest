@@ -8,6 +8,8 @@ namespace Services.utils
     {
         public static double GetMedian(List<int> list)
         {
+            if (list == null || !list.Any()) return 0;
+            
             list.Sort();
             var bitShiftedValue = list.Count >> 1;
 

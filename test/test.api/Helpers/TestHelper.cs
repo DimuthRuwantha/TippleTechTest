@@ -71,5 +71,24 @@ namespace Test.api.Helpers
                 }
             };
         }
+
+        public static DrinksList CreateDrinksList(List<Drink> drinks)
+        {
+            return new DrinksList()
+            {
+                Drinks = drinks
+            };
+        }
+
+        public static Drink CreateDrink(int id)
+        {
+            return new Drink()
+            {
+                idDrink = id.ToString(),
+                strDrink = "Flying Dutchman",
+                strIngredient1 = "Gin",
+                strIngredient2 = "Triple sec"
+            };
+        }
     }
 }

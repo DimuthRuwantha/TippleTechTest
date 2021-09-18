@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
 using api.Controllers;
 using Common.Models.Response;
 using Interface;
@@ -11,7 +9,7 @@ using Services.Context;
 using Test.api.Helpers;
 using Xunit;
 
-namespace Test.api
+namespace Test.api.EndPointTests
 {
     public class RandomCocktailTests
     {

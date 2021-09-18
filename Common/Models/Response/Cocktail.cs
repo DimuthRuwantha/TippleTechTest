@@ -16,7 +16,7 @@ namespace Common.Models.Response
     }
 
     #region Temp objects
-    public class CockTails
+    public class DrinksList
     {
         public List<Drink> Drinks { get; set; }
     }
