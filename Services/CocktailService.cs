@@ -42,7 +42,6 @@ namespace Services
         public async Task<Cocktail> GetRandomCockTail()
         {
             var drink = await _cockTailDataService.GetRandomCockTail();
-            //await _http.GetFromJsonAsync<CockTails>($"/api/json/v1/1/random.php");
             if (drink == null) return null;
             var cockTail = MapToCocktailObject(drink);
             return cockTail;

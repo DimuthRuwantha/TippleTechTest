@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Models.Response;
+using Microsoft.VisualBasic;
 using Moq;
 using Services;
 using Services.Context;
@@ -78,6 +80,17 @@ namespace Test.api.ServiceTests
 
             var cockTails = await cocktailService.SearchCockTail("Gin");
             Assert.Null(cockTails);
+        }
+
+        [Fact]
+        public async void SearchCocktailThrowsException()
+        {
+            _cocktailDataServiceMock.Setup(s => s.GetCocktailsByIngredient("Gin"))
+                .Throws(new Exception());
+
+            var cocktailService = new CocktailService(_cocktailDataServiceMock.Object);
+
+            await Assert.ThrowsAsync<Exception>( () => cocktailService.SearchCockTail("Gin"));
         }
     }
 }
